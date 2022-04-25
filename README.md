@@ -8,6 +8,7 @@
 - Create Project : django-admin startproject <ins>project-name</ins> . (Don't forget the dot)
 - Create App (blog) : python3 manage.py startapp <ins>app-name</ins>
 - pip3 install django-allauth
+- pip3 install django-crispy-forms
 
 ## Installation & Command Line
 
