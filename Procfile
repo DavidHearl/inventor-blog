@@ -1,1 +1,1 @@
-web: gunicorn inventor-blog.wsgi
+web: gunicorn inventorblog.wsgi
