@@ -35,4 +35,9 @@ admin and user, both share the same password.
 - Add google adsense to the website
 
 - Delete comments for user
+- pytest
+- flesh out readme
+- pep8
+- add tests
+- create local admin page
 
