@@ -12,14 +12,23 @@
                 <div class="col-md-4">
                     <div class="card mb-4">
                         <div class="card-body">
-                            Author: {{ post.author }}
+                            {% if "placeholder" in post.featured_image.url %}
+                                <img class="card-img-top"
+                                    src="https://smartinwi.com/wp-content/uploads/2020/09/autodesk-inventor-logo.png">
+                                {% else %}
+                                <img class="card-img-top" src=" {{ post.featured_image.url }}">
+                                {% endif %}
                             <a href="{% url 'post_detail' post.slug %}">
                                 <h2>{{ post.title }}</h2>
                                 <p>{{ post.excerpt }}</p>
                             </a>
                             <hr />
-                            <p>{{ post.created_on}} <i class="far fa-heart"></i>
-                                {{ post.number_of_likes }}</p>
+                            <p>
+                                Author: {{ post.author }} |
+                                {{ post.created_on}} 
+                                <i class="far fa-heart"></i>
+                                {{ post.number_of_likes }}
+                            </p>
                         </div>
                     </div>
                 </div>

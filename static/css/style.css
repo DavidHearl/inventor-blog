@@ -1,10 +1,56 @@
-.brand {
-    font-family: Lato, sans-serif;
-    font-size: 1.4rem;
-    font-weight: 700;
-    color: #4A4A4F;
+body{
+    font-family: 'Roboto', sans-serif;
 }
 
-.card {
-    border: 1px solid black;
+/* ----- Navigation ----- */
+
+.navbar-dark .navbar-toggler{
+    border: none;
 }
+
+.navbar{
+    background-color: #444;
+    margin-bottom: 25px;
+}
+
+.nav-link{
+    color: #fff;
+}
+
+.navbar-collapse{
+    flex-grow: 0;
+}
+
+#logo{
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.4rem;
+}
+
+/* ----- Sign in ----- */
+
+.flex-shink-0{
+    margin: 0 auto;
+}
+
+#login-button{
+   width: 286.5px;
+}
+
+#register-button{
+    width: 341px;
+}
+
+.center{
+    text-align: center;
+}
+
+h3{text-align: center;}
+
+/* Footer */
+
+.mt-auto{
+    background-color: #444;
+    color: #fff;
+}
+

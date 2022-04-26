@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% load i18n %}
+
 {% load account socialaccount %}
 
 {% block head_title %}{% trans "Sign In" %}{% endblock %}
@@ -8,26 +9,26 @@
 {% block content %}
 
 <div class="container">
-	<div class="row">
-		<div class="col">
+	<div class="row justify-content-center">
+		<div class="col-md-8">
 			<h3>{% trans "Sign In" %}</h3>
-			<p>
-				{% blocktrans %}If you have not created an account yet, then please
-				<a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}
+			<p class="center">
+				Welcome back to the CAD Tips Blog. To leave a like or comment, please sign in.
+				If you have not created an account yet, then head over to the
+				<a href="{{ signup_url }}">registration</a> page.
 			</p>
-
 		</div>
 	</div>
 
 	<div class="row">
-		<div class="col">
+		<div class="col d-flex justify-content-center">
 			<form class="login" method="POST" action="{% url 'account_login' %}">
 				{% csrf_token %}
 				{{ form.as_p }}
 				{% if redirect_field_value %}
-				<input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+				<input class="text-input" type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
 				{% endif %}
-				<button class="primaryAction" type="submit">{% trans "Sign In" %}</button>
+				<button id="login-button" type="submit">{% trans "Sign In" %}</button>
 			</form>
 		</div>
 	</div>
