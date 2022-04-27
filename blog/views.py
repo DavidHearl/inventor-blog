@@ -3,9 +3,9 @@ from .forms import PostForm
 from .models import Post, Comment
 
 
-def base(request):
+def index(request):
     posts = Post.objects.all()
-    return render(request, 'base.html')
+    return render(request, 'index.html')
 
 
 def createPost(request):
@@ -20,10 +20,20 @@ def createPost(request):
 
     return render(request, 'blog/create_post.html')
 
+
 def postDetail(request, pk):
     post = Post.objects.get(id=pk)
     
     return render(request, 'blog/post_detail.html')
+
+
+def deletePost(request, pk):
+    post = Post.objects.get(id=pk)
+    if request.method == "POST":
+        post.delete()
+        return redirect('home')
+
+    return render(request, 'blog/delete_post.html')
 
 
 # from django.views import generic, View
