@@ -2,6 +2,20 @@
 
 {% block content %}
 
+<h1>Main Page</h1>
+<a href="{% url 'create_post' %}">Create new post</a>
+
+{% for post in post_list %}
+
+<div>
+    <p>{{ post.created }}</p>
+    <p>{{ post.title }}</p>
+</div>
+
+{% endfor %}
+
+{%endblock%}
+
 <!-- <div class="container">
     <div class="row">
 
@@ -53,4 +67,3 @@
     </nav>
     {% endif %}
 </div> -->
-{%endblock%}
