@@ -8,13 +8,13 @@
 {% for post in post_list %}
 
 <div>
-    <p>{{ post.created }}</p>
-    <p>{{ post.title }}</p>
+    <p>{{ post.created_on }}</p>
+    <a href="{% url 'post_detail' post.id %}"><p>{{ post.title }}</p></a>
 </div>
 
 {% endfor %}
 
-{%endblock%}
+{% endblock %}
 
 <!-- <div class="container">
     <div class="row">

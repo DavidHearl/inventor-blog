@@ -8,7 +8,7 @@ def base(request):
     return render(request, 'base.html')
 
 
-def create_post(request):
+def createPost(request):
     form = PostForm()
 
     if request.method == "POST":
@@ -19,6 +19,12 @@ def create_post(request):
             return redirect('base')
 
     return render(request, 'blog/create_post.html')
+
+def postDetail(request, pk):
+    post = Post.objects.get(id=pk)
+    
+    return render(request, 'blog/post_detail.html')
+
 
 # from django.views import generic, View
 # from .models import Post
