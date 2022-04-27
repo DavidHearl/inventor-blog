@@ -32,8 +32,6 @@ admin and user, both share the same password.
 
 ## To Do List - Will be removed before final deployment
 
-- Add google adsense to the website
-
 - Delete comments for user
 - pytest
 - flesh out readme
