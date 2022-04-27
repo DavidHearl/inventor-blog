@@ -27,15 +27,10 @@ For testing purposes two users have been created.
 
 admin and user, both share the same password.
 
-
-
-
 ## To Do List - Will be removed before final deployment
 
 - Delete comments for user
 - pytest
 - flesh out readme
-- pep8
 - add tests
-- create local admin page
-
+- pep8

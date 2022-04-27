@@ -51,20 +51,22 @@
 
 <div class="container">
 
-
     <div class="row">
         <div class="col-md-8 card comments">
             <div class="card-body">
                 <h3>Comments:</h3>
                 {% for comment in comments %}
-                <div class="comments" style="padding: 10px;">
-                    <p class="font-weight-bold">
-                        {{ comment.name }}
-                        <span>{{ comment.created_on }}</span>
+                <div class="comments">
+                    <p>
+                        {{ comment.name }} |
+                        <span>
+                            {{ comment.created_on }}
+                        </span>
                         wrote:
                     </p>
                     {{ comment.body | linebreaks }}
                     <hr>
+                    <a href="{% url 'post_detail' comment.pk %}"> Delete my comment </a>
                 </div>
                 {% endfor %}
             </div>
@@ -72,11 +74,6 @@
 
         <div class="col-md-4 card comments">
             <div class="card-body">
-                {% if commented %}
-                <div>
-                    Your comment is in the approval queue.
-                </div>
-                {% else %}
 
                 {% if user.is_authenticated %}
 
@@ -86,9 +83,9 @@
                     {{ comment_form | crispy }}
 
                     {% csrf_token %}
-                    <span><button id="submit-comment" type="submit">Submit</button></span>
+                    <button id="submit-comment" type="submit">Submit</button>
                 </form>
-                {% endif %}
+
                 {% endif %}
             </div>
         </div>
