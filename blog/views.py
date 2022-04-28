@@ -78,7 +78,16 @@ def createPost(request):
 
 def postDetail(request, pk):
     post = Post.objects.get(id=pk)
-    comments = post.comment_set.all()
+    comments = post.comment_set.all().order_by('-created')
+
+    if request.method == "POST":
+        comment = Comment.objects.create(
+            author=request.user,
+            post=post,
+            body=request.POST.get('body')
+        )
+        return redirect('post_view', pk=post.id)
+
     context = {
         'posts': post,
         'comments': comments
@@ -89,16 +98,38 @@ def postDetail(request, pk):
 
 @login_required(login_url='login')
 def deletePost(request, pk):
+    text_type = 'post'
     post = Post.objects.get(id=pk)
 
     if request.user != post.author:
         return redirect('home')
 
     context = {
-        'posts': post
+        'posts': post,
+        'text_type': text_type
     }
     if request.method == "POST":
         post.delete()
         return redirect('home')
 
     return render(request, 'views/delete_post.html', context)
+
+
+@login_required(login_url='login')
+def deleteComment(request, pk):
+     comment = Comment.objects.get(id=pk)
+     post_id = request.GET.get('post_id')
+     print(post_id)
+
+     if request.user != comment.author:
+         return redirect('home')
+
+     if request.method == "POST":
+         comment.delete()
+         return redirect('post_detail', pk=post_id)
+
+     context = {'comment': comment, 'post_id': post_id}
+     return render(request, 'views/delete_post.html', context)
+
+
+

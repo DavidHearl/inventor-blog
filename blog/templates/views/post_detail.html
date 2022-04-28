@@ -7,12 +7,28 @@
     <p>{{ post.title }}</p>
 </div>
 
+{% if request.user.is_authenticated %}
+<div>
+    <h3>Add Comment</h3>
+    <form action="" method="POST">
+        {% csrf_token %}
+        <input type="text" name="body" placeholder="Add Comment:">
+    </form>
+</div>
+{% endif %}
+
 <div>
     {% for comment in comments %}
     <p>{{ comment.author }} | {{ comment.created_on }}</p>
     <p>{{ comment.body }}</p>
+    {% if request.user == comment.author %}
+    <a href="{% url 'delete_comment' comment.id %}?post_id={{ post.id }}"><button>Delete</button></a>
+    {% endif %}
     {% endfor %}
 </div>
+
+
+{% endblock content %}
 
 <!-- <div class="container">
     <div class="row">
@@ -103,5 +119,3 @@
         </div>
     </div>
 </div> -->
-
-{% endblock content %}
