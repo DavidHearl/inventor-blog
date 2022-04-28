@@ -8,17 +8,22 @@
 {% for post in posts %}
 
 <div>
-    <p>{{ post.created_on }} 
+    <p>{{ post.title }}</p>
+    <p>{{ post.created_on }}
         <a href="{% url 'delete_Post' post.id %}"><button>Delete</button></a>
     </p>
-    <button><a href="{% url 'delete_Post' post.id %}">Delete</a></button></p>
-    
     <a href="{% url 'post_detail' post.id %}">
-        <p>{{ post.title }}</p>
+
     </a>
 </div>
 
 {% endfor %}
+
+{% if request.user.is_authenticated %}
+    <p>Hello @{{request.user.username}}!</p>
+{% else %}
+    <p>Register/Log in to create, comment on and like posts.</p>
+{% endif %}
 
 {% endblock %}
 

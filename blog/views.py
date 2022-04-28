@@ -20,7 +20,7 @@ def login(request):
         return redirect('home')
 
     if request.method == "POST":
-        username = request.POST.get('username')
+        username = request.POST.get('username').lower()
         password = request.POST.get('password')
 
         user = authenticate(request, username=username, password=password)
@@ -38,6 +38,18 @@ def login(request):
 
 def register(request):
     form = UserCreationForm()
+
+    if request.method == "POST":
+         form = UserCreationForm(request.POST)
+         if form.is_valid():
+             user = form.save(commit=False)
+             user.username = user.username.lower()
+             user.save()
+             login(request, user)
+             return redirect('home')
+         else:
+             messages.error(request, "The registration was not successful")
+
     context = {'form': form}
     return render(request, 'views/login_register.html')
 

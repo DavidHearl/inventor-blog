@@ -10,7 +10,7 @@ body{
 }
 
 .navbar{
-    background-color: #444;
+    background-color: rgb(10,15,20);
     margin-bottom: 25px;
 }
 
@@ -122,7 +122,7 @@ h3{text-align: center;}
 /* Footer */
 
 .mt-auto{
-    background-color: #444;
+    background-color: rgb(10,15,20);
     color: #fff;
 }
 
