@@ -25,6 +25,11 @@
 <span><i class="far fa-heart"></i></span>
 {% endif %}
 <span></i> {{ post.number_of_likes }}</span>
+<span class="text-secondary">
+    <button class="like-button"><i class="far fa-comments"></i></button>
+    {{ total_comments }}
+</span>
+
 
 {% if request.user.is_authenticated %}
 <div>

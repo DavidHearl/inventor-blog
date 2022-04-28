@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.http import HttpResponseRedirect
+from django.db.models import Count
 from .forms import PostForm
 from .models import Post, Comment
 from django.contrib.auth.forms import UserCreationForm
@@ -68,11 +69,12 @@ def createPost(request):
 
     if request.method == "POST":
         form = PostForm(request.POST, request.FILES)
-        context = {'posts': post}
 
         if form.is_valid():
-            form.save()
-            return redirect('base')
+            post = form.save(commit=False)
+            post.author = request.user
+            post.save()
+            return redirect('home')
 
     return render(request, 'views/create_post.html', context)
 

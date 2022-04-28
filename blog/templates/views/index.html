@@ -17,6 +17,8 @@
     <a href="{% url 'post_detail' post.id %}"></a>
     <i class="far fa-heart"></i>
     {{ post.number_of_likes }}
+    <i class="fas fa-comments">
+    </i>{{ post.num_comments }}
 </div>
 
 {% endfor %}
