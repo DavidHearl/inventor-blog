@@ -1,40 +1,40 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="row mt-3">
 
-    <!-- Delete post section -->
-    <main class="col-lg-8">
-        {% if text_type == 'post' %}
-        <form method="POST">
-            {% csrf_token %}
-            <fieldset class="form-group">
-                <legend class="border-bottom mb-4">Are you sure you want to delete your post (see below)?</legend>
-            </fieldset>
-            <button type="submit" class="btn btn-danger mr-3">Confirm</button>
-            <a href="{% url 'home' %}#{{post.id}}" class="text-decoration-none">Nope, keep it!</a>
-        </form>
-        <div class="card card-feed">
-            <h2 class="my-3">{{ post.title }}</h2>
-            <img src="{{ post.image.url }}" alt="A funny Meme" class="mb-2 image">
+<!-- Delete post section -->
+<div class="container">
+    <div class="row">
+        <div class="col">
+            {% if text_type == 'post' %}
+            <form method="POST">
+                {% csrf_token %}
+                <fieldset>
+                    <legend>Are you sure you want to delete your post (see below)?</legend>
+                </fieldset>
+                <button type="submit">Confirm</button>
+                <a href="{% url 'home' %}#{{post.id}}">Nope, keep it!</a>
+            </form>
+            <div class="card card-feed">
+                <h2 class="my-3">{{ post.title }}</h2>
+                <img src="{{ post.image.url }}" alt="A funny Meme" class="mb-2 image">
+            </div>
+            {% else %}
+            <form method="POST">
+                {% csrf_token %}
+                <fieldset>
+                    <legend>Are you sure you want to delete your comment (see below)?
+                    </legend>
+                </fieldset>
+                <button type="submit">Confirm</button>
+                <a href="{{ request.META.HTTP_REFERER }}">Nope, keep it!</a>
+            </form>
+            <div>
+                <h3>{{ comment.body }}</h3>
+            </div>
+            {% endif %}
         </div>
-
-
-        <!-- Delete comment section -->
-        {% else %}
-        <form method="POST">
-            {% csrf_token %}
-            <fieldset class="form-group">
-                <legend class="border-bottom mb-4">Are you sure you want to delete your comment (see below)?</legend>
-            </fieldset>
-            <button type="submit" class="btn btn-danger mr-3">Confirm</button>
-            <a href="{{ request.META.HTTP_REFERER }}" class="text-decoration-none">Nope, keep it!</a>
-        </form>
-        <div class="mt-3 text-center">
-            <h3>{{ comment.body }}</h3>
-        </div>
-        {% endif %}
-    </main>
-
+    </div>
 </div>
+
 {% endblock %}

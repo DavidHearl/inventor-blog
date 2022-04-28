@@ -47,7 +47,8 @@ def postDetail(request, pk):
     View that displays each individual post
     """
     post = Post.objects.get(id=pk)
-    comments = post.comment_set.all().order_by('-created')
+    comments = post.comment_set.all()
+    # .order_by('-created')
 
     liked = False
 

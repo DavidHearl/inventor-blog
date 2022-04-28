@@ -30,102 +30,11 @@ body{
 
 /* ----- Main View ----- */
 
-.post-title{
-    color: black;
-}
-
-h1{
-    color: #fff;
-}
-
 .card{
-    border: 1px solid rgba(125,125,125, 0.5);
-    border-radius: 5px;
+    margin-bottom: 20px;
+    border: 1px solid white;
+    background-color: rgb(20,25,30);
 }
-
-.card-body{
-    padding: 8px;
-}
-
-h2{
-    margin: 6px 0;
-    text-decoration: none;
-    color: black;
-}
-
-hr{
-    margin: 2px;
-}
-
-a{
-    text-decoration: none;
-    color: white;
-}
-
-.post-information{
-    margin: 8px 0 0 0;
-}
-
-/* ----- Post View ----- */
-
-.form-control{
-    margin-bottom: 10px;
-}
-
-.like-button{
-    border: none;
-    background: none;
-}
-
-.fa-heart{
-    color: black;
-}
-
-.fa-comments{
-    color:black;
-}
-
-#submit-comment{
-    float: right;
-}
-
-.comments{
-    margin: 10px 0;
-    padding: 5px;
-    border: none;
-}
-
-/* ----- Sign in ----- */
-
-.flex-shink-0{
-    margin: 0 auto;
-}
-
-button{
-    background-color: #2196f3;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    padding: 5px 10px;
-}
-
-#logout-button{
-    width:200px;
-}
-
-#login-button{
-    width: 286.5px;
-}
-
-#register-button{
-    width: 341px;
-}
-
-.center{
-    text-align: center;
-}
-
-h3{text-align: center;}
 
 /* Footer */
 

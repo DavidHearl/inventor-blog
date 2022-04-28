@@ -3,19 +3,23 @@
 
 {% block content %}
 
-<div>
-    <form action="" method="POST">
-        {% csrf_token %}
-        <fieldset>
-            <legend>Log in</legend>
-            {{ form|crispy }}
-        </fieldset>
-        <div>
-            <button type="submit">Log in</button>
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <form action="" method="POST">
+                {% csrf_token %}
+                <fieldset>
+                    <legend>Log in</legend>
+                    {{ form|crispy }}
+                </fieldset>
+                <div>
+                    <button type="submit">Log in</button>
+                </div>
+            </form>
+            <div>
+                <a href="{% url 'register' %}">Sign Up</a>
+            </div>
         </div>
-    </form>
-    <div>
-        <a href="{% url 'register' %}">Sign In</a>
     </div>
 </div>
 
