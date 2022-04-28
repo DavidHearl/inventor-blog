@@ -3,8 +3,15 @@
 {% load crispy_forms_tags %}
 
 <div>
-    <p>{{ post.created_on }}</p>
+    <p>{{ post.author }} | {{ post.created_on }}</p>
     <p>{{ post.title }}</p>
+</div>
+
+<div>
+    {% for comment in comments %}
+    <p>{{ comment.author }} | {{ comment.created_on }}</p>
+    <p>{{ comment.body }}</p>
+    {% endfor %}
 </div>
 
 <!-- <div class="container">

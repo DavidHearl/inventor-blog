@@ -40,15 +40,15 @@ def register(request):
     form = UserCreationForm()
 
     if request.method == "POST":
-         form = UserCreationForm(request.POST)
-         if form.is_valid():
-             user = form.save(commit=False)
-             user.username = user.username.lower()
-             user.save()
-             login(request, user)
-             return redirect('home')
-         else:
-             messages.error(request, "The registration was not successful")
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.username = user.username.lower()
+            user.save()
+            login(request, user)
+            return redirect('home')
+        else:
+            messages.error(request, "The registration was not successful")
 
     context = {'form': form}
     return render(request, 'views/login_register.html')
@@ -78,8 +78,10 @@ def createPost(request):
 
 def postDetail(request, pk):
     post = Post.objects.get(id=pk)
+    comments = post.comment_set.all()
     context = {
-        'posts': post
+        'posts': post,
+        'comments': comments
     }
 
     return render(request, 'views/post_detail.html', context)
