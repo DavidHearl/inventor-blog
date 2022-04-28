@@ -1,39 +1,78 @@
 from django.shortcuts import render
+from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
 from .forms import PostForm
 from .models import Post, Comment
 
 
+def logout(request):
+    logout(request)
+    return redirect('home')
+
+
+def login(request):
+
+    if request.method == "POST":
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            return redirect('home')
+        else:
+            messages.error(
+                request, "Username or Password Incorrect")
+
+        context = {}
+        return render(request, 'views/login.html', context)
+
+
 def index(request):
     posts = Post.objects.all()
-    return render(request, 'index.html')
+    context = {'post': posts}
+
+    return render(request, 'views/index.html', context)
 
 
+
+@login_required(login_url='login')
 def createPost(request):
     form = PostForm()
 
     if request.method == "POST":
         form = PostForm(request.POST, request.FILES)
+        context = {'post': post}
 
         if form.is_valid():
             form.save()
             return redirect('base')
 
-    return render(request, 'blog/create_post.html')
+    return render(request, 'views/create_post.html', context)
 
 
 def postDetail(request, pk):
     post = Post.objects.get(id=pk)
+    context = {
+        'post': post
+    }
     
-    return render(request, 'blog/post_detail.html')
+    return render(request, 'views/post_detail.html', context)
 
 
 def deletePost(request, pk):
     post = Post.objects.get(id=pk)
+    context = {
+        'post': post
+    }
     if request.method == "POST":
         post.delete()
         return redirect('home')
 
-    return render(request, 'blog/delete_post.html')
+    return render(request, 'views/delete_post.html', context)
 
 
 # from django.views import generic, View
