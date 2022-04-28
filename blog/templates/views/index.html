@@ -9,9 +9,10 @@
 
 <div>
     <p>{{ post.created_on }} 
-        <a href="{% url 'post_delete' post.id %}"><button>Delete</button></a>
+        <a href="{% url 'delete_Post' post.id %}"><button>Delete</button></a>
     </p>
-    <button><a href="{% url 'post_delete' post.id %}">Delete</a></button></p>
+    <button><a href="{% url 'delete_Post' post.id %}">Delete</a></button></p>
+    
     <a href="{% url 'post_detail' post.id %}">
         <p>{{ post.title }}</p>
     </a>
