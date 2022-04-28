@@ -2,34 +2,54 @@
 
 {% block content %}
 
-<h1>Main Page</h1>
-<a href="{% url 'create_post' %}">Create new post</a>
+<div class="container">
+    <h1>Main Page</h1>
+    <a href="{% url 'create_post' %}">Create new post</a>
+    <div class="row">
+        {% for post in posts %}
+        <div class="col-12 mb-3">
+            <div class="card">
+                <a class="post-title" href="{% url 'post_detail' post.id %}">{{ post.title }}</a>
+                <div class="card-body">
 
-{% for post in posts %}
+                </div>
+                <p>{{ post.created_on }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}
+
+<!-- 
+
+
+
 
 <div>
-    <p>{{ post.title }}</p>
-    <p>{{ post.created_on }}
+    
+    
         <a href="{% url 'delete_Post' post.id %}">
             <button>Delete</button>
         </a>
-    </p>
-    <a href="{% url 'post_detail' post.id %}"></a>
+    
+    
     <i class="far fa-heart"></i>
     {{ post.number_of_likes }}
     <i class="fas fa-comments">
     </i>{{ post.num_comments }}
 </div>
 
-{% endfor %}
+ -->
 
-{% if request.user.is_authenticated %}
+<!-- {% if request.user.is_authenticated %}
     <p>Hello @{{request.user.username}}!</p>
 {% else %}
     <p>Register/Log in to create, comment on and like posts.</p>
-{% endif %}
+{% endif %} -->
 
-{% endblock %}
+
 
 <!-- <div class="container">
     <div class="row">

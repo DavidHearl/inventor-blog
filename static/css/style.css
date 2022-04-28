@@ -30,6 +30,14 @@ body{
 
 /* ----- Main View ----- */
 
+.post-title{
+    color: black;
+}
+
+h1{
+    color: #fff;
+}
+
 .card{
     border: 1px solid rgba(125,125,125, 0.5);
     border-radius: 5px;
