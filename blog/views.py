@@ -1,8 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, reverse
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
+from django.http import HttpResponseRedirect
 from .forms import PostForm
 from .models import Post, Comment
 from django.contrib.auth.forms import UserCreationForm
@@ -80,7 +81,15 @@ def postDetail(request, pk):
     post = Post.objects.get(id=pk)
     comments = post.comment_set.all().order_by('-created')
 
+    liked = False
+
+    if post.likes.filter(id=request.user.id).exists():
+        liked = True
+
     if request.method == "POST":
+        liked = False
+        if post.likes.filter(id=request.user.id).exists():
+            liked = True
         comment = Comment.objects.create(
             author=request.user,
             post=post,
@@ -90,10 +99,22 @@ def postDetail(request, pk):
 
     context = {
         'posts': post,
-        'comments': comments
+        'comments': comments,
+        'liked': liked
     }
 
     return render(request, 'views/post_detail.html', context)
+
+
+def likePost(request, pk):
+    post = Post.objects.get(id=pk)
+
+    if post.likes.filter(id=request.user.id).exists():
+        post.likes.remove(request.user)
+    else:
+        post.likes.add(request.user)
+
+    return HttpResponseRedirect(reverse('post_detail', args=[str(pk)]))
 
 
 @login_required(login_url='login')
@@ -117,19 +138,16 @@ def deletePost(request, pk):
 
 @login_required(login_url='login')
 def deleteComment(request, pk):
-     comment = Comment.objects.get(id=pk)
-     post_id = request.GET.get('post_id')
-     print(post_id)
+    comment = Comment.objects.get(id=pk)
+    post_id = request.GET.get('post_id')
+    print(post_id)
 
-     if request.user != comment.author:
-         return redirect('home')
+    if request.user != comment.author:
+        return redirect('home')
 
-     if request.method == "POST":
-         comment.delete()
-         return redirect('post_detail', pk=post_id)
+    if request.method == "POST":
+        comment.delete()
+        return redirect('post_detail', pk=post_id)
 
-     context = {'comment': comment, 'post_id': post_id}
-     return render(request, 'views/delete_post.html', context)
-
-
-
+    context = {'comment': comment, 'post_id': post_id}
+    return render(request, 'views/delete_post.html', context)

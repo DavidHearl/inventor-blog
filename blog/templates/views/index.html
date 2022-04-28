@@ -10,11 +10,13 @@
 <div>
     <p>{{ post.title }}</p>
     <p>{{ post.created_on }}
-        <a href="{% url 'delete_Post' post.id %}"><button>Delete</button></a>
+        <a href="{% url 'delete_Post' post.id %}">
+            <button>Delete</button>
+        </a>
     </p>
-    <a href="{% url 'post_detail' post.id %}">
-
-    </a>
+    <a href="{% url 'post_detail' post.id %}"></a>
+    <i class="far fa-heart"></i>
+    {{ post.number_of_likes }}
 </div>
 
 {% endfor %}

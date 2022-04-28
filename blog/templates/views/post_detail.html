@@ -7,6 +7,25 @@
     <p>{{ post.title }}</p>
 </div>
 
+{% if user.is_authenticated %}
+<form class="d-inline" action="{% url 'post_like' post.slug %}" method="POST">
+    {% csrf_token %}
+
+    {% if liked %}
+    <button class="like-button" type="submit" name="blogpost_id" value="{{post.slug}}">
+        <i class="fas fa-heart"></i>
+    </button>
+    {% else %}
+    <button class="like-button" type="submit" name="blogpost_id" value="{{post.slug}}">
+        <i class="far fa-heart"></i>
+    </button>
+    {% endif %}
+</form>
+{% else %}
+<span><i class="far fa-heart"></i></span>
+{% endif %}
+<span></i> {{ post.number_of_likes }}</span>
+
 {% if request.user.is_authenticated %}
 <div>
     <h3>Add Comment</h3>
