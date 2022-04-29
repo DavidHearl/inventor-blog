@@ -46,7 +46,7 @@
     <p>{{ comment.author }} | {{ comment.created_on }}</p>
     <p>{{ comment.body }}</p>
     {% if request.user == comment.author %}
-    <a href="{% url 'delete_comment' comment.id %}?post_id={{ post.id }}"><button>Delete</button></a>
+    <a href="{% url 'delete' comment.id %}?post_id={{ post.id }}"><button>Delete</button></a>
     {% endif %}
     {% endfor %}
 </div>
