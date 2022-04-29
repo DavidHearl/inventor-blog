@@ -31,8 +31,7 @@ admin and user, both share the same password.
 
 *** Everything in Order ***
 
-- fix python tests
-- pep8
+- fix python tests, then run pep8 on test files
 - delete comments for users
 - style website
 - type up userstories in github
