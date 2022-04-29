@@ -1,173 +1,214 @@
-from django.shortcuts import render, redirect, reverse
-from django.db.models import Count
-from django.contrib.auth.models import User
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth import authenticate, login, logout
+from django.shortcuts import render, get_object_or_404, redirect, reverse
+from django.views.generic import UpdateView, DeleteView
+from django.views import generic, View
+from django.utils.text import slugify
 from django.contrib import messages
+from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
+
+from .models import Post
 from .forms import PostForm
-from .models import Post, Comment
-from django.contrib.auth.forms import UserCreationForm
 
 
-def register(request):
-    """
-    This view is used when a visitor wants to register
-    an account on the website.
-    """
-    form = UserCreationForm()
-
-    if request.method == "POST":
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            login(request, user)
-            message.success(request, 'User account created successfully')
-            return redirect('home')
-        else:
-            messages.error(request, "The registration was not successful")
-
-    context = {'form': form}
-    return render(request, 'views/register.html')
+class PostList(generic.ListView):
+    """View for the list of blogs posted by all users"""
+    model = Post
+    queryset = Post.objects.filter(status=1).order_by('-created_on')
+    template_name = 'index.html'
+    paginate_by = 8
 
 
-def index(request):
-    """
-    This view is the main view found when
-    entering the website, it displays a list of posts.
-    """
-    posts = Post.objects.all()
-    context = {'posts': posts}
+class PostDetail(View):
+    """View post details"""
 
-    return render(request, 'views/index.html', context)
-
-
-def postDetail(request, pk):
-    """
-    View that displays each individual post
-    """
-    post = Post.objects.get(id=pk)
-    comments = post.comments.order_by("-created_on")
-
-    liked = False
-
-    if post.likes.filter(id=request.user.id).exists():
-        liked = True
-
-    if request.method == "POST":
+    def get(self, request, slug, *args, **kwargs):
+        """Function to get the post details"""
+        queryset = Post.objects.filter(status=1)
+        post = get_object_or_404(queryset, slug=slug)
         liked = False
-        if post.likes.filter(id=request.user.id).exists():
+        if post.likes.filter(id=self.request.user.id).exists():
             liked = True
-        try:
-            if request.POST.get('body') == '':
-                messages.error(
-                    request, "This field has been left blank"
-                )
+
+        post.body = post.body.replace(
+            "['", '').replace("']", '').replace(
+                "]", '').replace(" '", '').split("',")
+
+        return render(
+            request,
+            "post_detail.html",
+            {
+                "post": post,
+                "liked": liked
+            },
+        )
+
+
+class DraftPostDetail(View):
+    """View the post details for posts that are awaiting approval"""
+    model = Post
+    template_name = 'post_detail.html'
+
+    def get(self, request, slug, *args, **kwargs):
+        """Function to grab the post details"""
+        queryset = Post.objects.filter(status=0)
+        post = get_object_or_404(queryset, slug=slug)
+
+        post.body = post.body.replace(
+            '[', '').replace(']', '').replace("'", '').split(',')
+
+        return render(
+            request,
+            "draft_post.html",
+            {
+                "post": post,
+            },
+        )
+
+
+class LikePost(View):
+    """View for the like post function"""
+
+    def post(self, request, slug, *args, **kwargs):
+        """
+        Like function, displays a like depending on wether the
+        user has liked or not liked a post.
+        """
+        post = get_object_or_404(Post, slug=slug)
+        if post.likes.filter(id=request.user.id).exists():
+            post.likes.remove(request.user)
+        else:
+            post.likes.add(request.user)
+
+        return HttpResponseRedirect(reverse('post_detail', args=[slug]))
+
+
+def create_post(request):
+    """fuction to allow to user to create their own post"""
+    post_form = PostForm()
+
+    if request.method == 'POST':
+        model = Post()
+        results = Post.objects.filter(
+            author=request.user, title=request.POST.get('title'))
+        post_form = PostForm()(request.POST, request.FILES)
+
+        if post_form.is_valid():
+
+            if results.count() > 0:
+                messages.error(request, 'Duplicate Title!')
+                return render(request, "create_post.html",
+                              {
+                                  "post_form": PostForm(),
+                              },
+                              )
             else:
-                comment = Comment.objects.create(
-                    author=request.user,
-                    post=post,
-                    body=request.POST.get('body')
-                )
-            message.success(
-                request, "Your comment has been posted sucessfully"
-            )
-        except Exception as E:
-            print(E)
-            return redirect('post_detail', pk=post.id)
-        return redirect('post_detail', pk=post.id)
-
-    context = {
-        'posts': post,
-        'comments': comments,
-        'liked': liked
-    }
-    return render(request, 'views/post_detail.html', context)
-
-
-def likePost(request, pk):
-    """
-    Function that controls the adding and subtracting of likes
-    """
-    post = Post.objects.get(id=pk)
-
-    if post.likes.filter(id=request.user.id).exists():
-        post.likes.remove(request.user)
+                post = post_form.save(commit=False)
+                post.body = request.POST.getlist('body')
+                post.author = request.user
+                post.slug = slugify('-'.join([post.title,
+                                                str(post.author)]),
+                                      allow_unicode=False)
+                messages.success(
+                    request, "Post submitted and waiting approval!")
+                post.save()
+                return redirect('home')
+        else:
+            messages.error(request, 'Please do not leave any of the required fields blank')
+            return render(request, "create_post.html",
+                          {
+                              "post_form": post_form,
+                          },
+                          )
     else:
-        post.likes.add(request.user)
-
-    return HttpResponseRedirect(reverse('post_detail', args=[str(pk)]))
-
-
-@login_required(login_url='login')
-def createPost(request):
-    """
-    This view (for users who have logged in) allows
-    users to create posts
-    """
-    form = PostForm()
-
-    if request.method == "POST":
-        form = PostForm(request.POST, request.FILES)
-
-        if form.is_valid():
-            post = form.save(commit=False)
-            post.author = request.user
-            post.save()
-            messages.success(request, 'Your post was created successfully')
-            return redirect('home')
-
-    context = {'form': form}
-    return render(request, 'views/create_post.html', context)
+        return render(request, "create_post.html",
+                      {
+                          "post_form": post_form,
+                      },
+                      )
 
 
-@login_required(login_url='login')
-def deletePost(request, pk):
-    """
-    This view (for users who have logged in) allows
-    users to delete thier own posts
-    """
-    text_type = 'post'
-    try:
-        post = Post.objects.get(id=pk)
-    except Post.DoesNotExist:
-        return redirect('home')
-
-    if request.user != post.author:
-        return redirect('home')
-
-    if request.method == "POST":
-        post.delete()
-        messages.success(request, 'Your post has been deleted sucessfully')
-        return redirect('home')
-
-    context = {
-        'posts': post,
-        'text_type': text_type
-    }
-
-    return render(request, 'views/delete.html', context)
+class UserPosts(generic.ListView):
+    """View for the lists of posts created by the user"""
+    model = Post
+    queryset = Post.objects.filter(status=1)
+    template_name = 'my_posts.html'
+    paginate_by = 8
 
 
-@login_required(login_url='login')
-def deleteComment(request, pk):
-    """
-    This view (for users who have logged in) allows
-    users to delete thier own comments
-    """
-    post_id = request.GET.get('post_id')
-    try:
-        comment = Comment.objects.get(id=pk)
-    except Comment.DoesNotExist:
-        return redirect('post_detail', pk=post_id)
+class PendingPosts(generic.ListView):
+    """View the list of posts that are pending approval"""
+    model = Post
+    paginate_by = 8
+    queryset = Post.objects.filter(status=0)
+    template_name = 'my_drafts.html'
 
-    if request.user != comment.author:
-        return redirect('home')
 
-    if request.method == "POST":
-        comment.delete()
-        messages.success(request, 'Your comment was sucessfully deleted')
-        return redirect('post_detail', pk=post_id)
+class UpdatePost(UpdateView):
+    """View to update posts that have been published"""
+    model = Post
+    form_class = PostForm
+    template_name = 'update_post.html'
+    success_url = reverse_lazy('my_published_posts')
 
-    context = {'comment': comment, 'post_id': post_id}
-    return render(request, 'views/delete.html', context)
+    def form_valid(self, form):
+        request = self.request
+        messages.success(self.request, 'Post updated successfully!')
+        post = form.save(commit=False)
+        post.body = request.POST.getlist('body')
+        post.author = request.user
+        post.save()
+        return HttpResponseRedirect(self.get_success_url())
+
+    def form_invalid(self, form):
+        """If the form is invalid, render the invalid form."""
+        return self.render_to_response(self.get_context_data(form=form))
+
+
+class DeletePost(DeleteView):
+    """View to delete published posts"""
+    model = Post
+    template_name = 'delete_post.html'
+    success_url = reverse_lazy('my_published_posts')
+
+    success_message = "Post permanently deleted."
+
+    def delete(self, request, *args, **kwargs):
+        messages.success(self.request, self.success_message)
+        return super(DeletePost, self).delete(request, *args, **kwargs)
+
+    
+class UpdatePendingPost(UpdateView):
+    """View to update pending posts"""
+    model = Post
+    form_class = PostForm
+    template_name = 'update_post.html'
+    success_url = reverse_lazy('my_pending_posts')
+
+    def form_valid(self, form):
+        request = self.request
+        messages.success(self.request, 'Post updated successfully!')
+        post = form.save(commit=False)
+        post.instructions = request.POST.getlist('body')
+        post.author = request.user
+        post.save()
+        return HttpResponseRedirect(self.get_success_url())
+
+    def form_invalid(self, form):
+        """If the form is invalid, render the invalid form."""
+        messages.error(self.request, 'Post cannot be updated, please try again')
+        return self.render_to_response(self.get_context_data(form=form))
+
+
+class DeletePendingPost(DeleteView):
+    """View to delete posts that are pending approval"""
+    model = Post
+    template_name = 'delete_post.html'
+    success_url = reverse_lazy('my_pending_posts')
+
+    # Used Stack Overflow to help get this message showing
+    success_message = "Post has been permanently deleted."
+
+    def delete(self, request, *args, **kwargs):
+        messages.success(self.request, self.success_message)
+        return super(DeletePendingPost, self).delete(
+            request, *args, **kwargs)
