@@ -1,3 +1,61 @@
+# Inventor Blog - [Live Website](https://inventor-blog.herokuapp.com)
+
+CAD Tips is a fully responsive blog where users can come to learn how to use Autodesk Inventor.
+The user will find helpful posts and examples which they can complete to increase their skill!
+
+## User Experience
+
+### Epics into User Stories
+
+## Design
+
+### Color Scheme
+
+### Font
+
+## Concepts - Wire Frames
+
+## Agile Development
+
+## Data Model
+
+### Database Management System
+
+### User Models
+
+### Post Model
+
+### Comment Model
+
+### Database
+
+## Technologies Used
+
+### Languages
+
+#### HTML, CSS, JavaScript, Python
+
+### Version Control
+
+#### Git, GitHub
+
+### Responsive Design
+
+[Techsini.com](https://techsini.com/multi-mockup/)
+
+### Site Packages
+
+#### Font Awesome
+
+#### Google Fonts
+
+#### Bootstrap
+
+
+
+
+----------------------------
+
 ## Deployment
 
 ### Terminal Commands
@@ -26,6 +84,8 @@
 For testing purposes two users have been created.
 
 admin and user, both share the same password.
+
+python3 manage.py test blog.tests
 
 ## To Do List - Will be removed before final deployment
 

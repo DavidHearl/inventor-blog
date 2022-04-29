@@ -1,10 +1,15 @@
 {% extends 'base.html' %}
 
- {% block content %}
+{% block content %}
 
- <h2>Logged out successfully! </h2>
- <div>
-    <a href="{% url 'login' %}">Log in again?</a>
- </div>
+<div class="container">
+	<div class="row center">
+		<div class="col">
+			<h2 class="label">Logged out successfully! </h2>
+			<a class="home-button" href="{% url 'home' %}">Return Home</a>
+			<a class="login-button" href="{% url 'login' %}">Log in again?</a>
+		</div>
+	</div>
+</div>
 
- {% endblock %}
+{% endblock %}

@@ -1,5 +1,3 @@
-console.log("Hello World")
-
 // Automatically close alert after 3 seconds
 setTimeout(function () {
     let messages = document.getElementById('msg');

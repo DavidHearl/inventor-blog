@@ -1,6 +1,46 @@
 body{
     font-family: 'Roboto', sans-serif;
     background-color: rgb(20, 25, 30);
+    color: #fff;
+}
+
+/* Global */
+
+.center{
+    text-align: center;
+}
+
+.home-button{
+    background-color: #1292e2;
+    padding: 10px;
+    border-radius: 5px;
+    color: #fff;
+    text-decoration: none;
+}
+
+.login-button{
+    background-color:#00ab66;
+    border-radius: 5px;
+    padding: 7.5px 10px;
+    color: #fff;
+    text-decoration: none;
+    border: none;
+}
+
+.register-button{
+    background-color:#fff;
+    border-radius: 5px;
+    padding: 10px;
+    color: #1292e2;
+    text-decoration: none;
+}
+
+.alert{
+    text-align: center;
+}
+
+.label{
+    margin: 40px 0;
 }
 
 /* ----- Navigation ----- */

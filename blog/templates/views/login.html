@@ -4,8 +4,8 @@
 {% block content %}
 
 <div class="container">
-    <div class="row">
-        <div class="col-12">
+    <div class="row center">
+        <div class="col">
             <form action="" method="POST">
                 {% csrf_token %}
                 <fieldset>
@@ -13,12 +13,11 @@
                     {{ form|crispy }}
                 </fieldset>
                 <div>
-                    <button type="submit">Log in</button>
+                    <a class="register-button" href="{% url 'register' %}">Register</a>
+                    <button class="login-button" type="submit">Login</button>
                 </div>
             </form>
-            <div>
-                <a href="{% url 'register' %}">Sign Up</a>
-            </div>
+
         </div>
     </div>
 </div>
