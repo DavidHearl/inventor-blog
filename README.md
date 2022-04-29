@@ -29,8 +29,11 @@ admin and user, both share the same password.
 
 ## To Do List - Will be removed before final deployment
 
-- Delete comments for user
-- pytest
-- flesh out readme
-- add tests
+*** Everything in Order ***
+
+- fix python tests
 - pep8
+- delete comments for users
+- style website
+- type up userstories in github
+- write readme
