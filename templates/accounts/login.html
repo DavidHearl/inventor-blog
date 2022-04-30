@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %} CAD-Tips | Login{% endblock %}
+{% block content %}
+
+<header>
+    <h1>Login</h1>
+</header>
+
+<!-- Message Banner -->
+{% if messages %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            {% for message in messages %}
+            <div class="alert {{ message.tags }} alert-dismissible fade show" id="msg" role="alert">
+                {{ message | safe }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endif %}
+
+
+<!-- Login Form  -->
+
+<div>
+    <form method="POST" action="" class="form accounts-forms login-form">
+
+        {% csrf_token %}
+
+        <div class="form-input-fields">
+            <label for="username">Username</label>
+            <input id="username" name="username" type="text" class="form-input form-control">
+        </div>
+
+        <div class="form-input-fields">
+            <label for="password">Password</label>
+            <input id="password" name="password" type="password" class="form-input form-control">
+        </div>
+
+        <div class="form-input-fields">
+            <button type="submit" class="btn btn-dark all-btn">Sign in</button>
+        </div>
+
+        <p class="form-input-fields">Need an account?
+            Register <a href="{% url 'register' %}" class="link-item">here</a>!
+        </p>
+
+    </form>
+</div>
+
+{% endblock %}

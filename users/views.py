@@ -23,7 +23,7 @@ def login_page(request):
 
     context = {}
 
-    return render(request, 'account/login.html', context)
+    return render(request, 'accounts/login.html', context)
 
 
 def logout_user(request):
@@ -58,7 +58,7 @@ def register_user(request):
     else:
         form = UserCreationForm()
 
-    return render(request, 'account/register.html', {'form': form})
+    return render(request, 'accounts/register.html', {'form': form})
 
 
 def change_password(request):
@@ -75,4 +75,4 @@ def change_password(request):
             messages.error(
                 request, "Incorrect Password or New Passwords do not match")
 
-    return render(request, 'account/password_change.html', {'form': form})
+    return render(request, 'accounts/password_change.html', {'form': form})

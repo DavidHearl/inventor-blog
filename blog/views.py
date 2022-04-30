@@ -1,3 +1,4 @@
+"""Views for the different pages to be rendered"""
 from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.views.generic import UpdateView, DeleteView
 from django.views import generic, View

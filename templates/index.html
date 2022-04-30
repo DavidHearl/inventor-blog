@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block title %}Foody Family{% endblock %}
+{% block content %}
+
+<!-- Messages -->
+{% if messages %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            {% for message in messages %}
+            <div class="alert {{ message.tags }} alert-dismissible fade show" id="msg" role="alert">
+                {{ message | safe }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endif %}
+
+
+<!-- post cards, basic code taken from Bootstrap to list all posted and approved posts -->
+<div class="container">
+    <div class="row">
+        <div class="col-12 mt-4 ">
+            <div class="row">
+                <h1 class="rec-title">posts</h1>
+                {% for posts in post_list %}
+                <div class="col-12">
+                    <div class="card card-position">
+                        <a href="{% url 'post_detail' posts.slug %}"></a>
+                        <div class="card-body">
+                            <a href="{% url 'post_detail' posts.slug %}">
+                                <h5 class="card-title rec-card-title">{{ posts.title }}</h5>
+                            </a>
+                            <p class="card-text">By {{ posts.author }}</p>
+                            <div class="card-text">
+                                <span>
+                                    <i class="far fa-clock card-icons"></i>{{ posts.total_length }}
+                                </span>
+                                <span>
+                                    <i class="fas fa-heart card-icons"></i>{{ posts.number_of_likes }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Pagination -->
+    <div>
+        {% if is_paginated %}
+        <nav aria-label="Page navigation">
+            <ul class="justify-content-center">
+                {% if page_obj.has_previous %}
+                <li><a href="?page={{ page_obj.previous_page_number }}" class="btn btn-dark all-btn page">&laquo; Prev
+                    </a>
+                </li>
+                {% endif %}
+                {% if page_obj.has_next %}
+                <li><a href="?page={{ page_obj.next_page_number }}" class="btn btn-dark all-btn page"> Next &raquo;</a>
+                </li>
+
+                {% endif %}
+            </ul>
+        </nav>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

@@ -4,7 +4,7 @@
 <html class="h-100">
 
 <head>
-    <title>Learning Autodesk Inventor</title>
+    <title>{Learning Autodesk Inventor}</title>
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -30,32 +30,51 @@
 
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
-            <strong><a id="logo" href="{% url 'home' %}">CAD TIPS</a></strong>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
-                aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <a class="navbar-brand" href="{% url 'home' %}">CAD-Tips</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarText">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
+                    <li class="nav-item nav-style">
+                        <a class="nav-link active nav-style" aria-current="page" href="{% url 'home' %}">Posts</a>
                     </li>
                     {% if user.is_authenticated %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+
+                    <li class="nav-item dropdown nav-style">
+                        <a class="nav-link dropdown-toggle welcome" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <span>Hi {{ user.username }}!</span>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="{% url 'create_post' %}"><i
+                                        class="fas fa-plus"></i>Add Post</a></li>
+                            <li><a class="dropdown-item" href="{% url 'my_published_posts' %}"><i
+                                        class="fas fa-carrot"></i>My Posts</a></li>
+                            <li><a class="dropdown-item" href="{% url 'my_pending_posts' %}"><i
+                                        class="fas fa-ellipsis-h"></i>Posts Pending Approval</a></li>
+                            <li><a class="dropdown-item" href="{% url 'change_password' %}"><i
+                                        class="fas fa-unlock-alt"></i>Change Password</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="{% url 'logout' %}"><i
+                                        class="fas fa-sign-out-alt nav-icon"></i>Logout</a></li>
+                        </ul>
                     </li>
                     {% else %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'register' %}">Register</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'login' %}">Login</a>
+                    <li class="nav-item dropdown">
+                        <a href="{% url 'login' %}" class="nav-link" id="navbarDropdown" role="button"
+                            aria-expanded="false" name="login">Login/Register</a>
                     </li>
                     {% endif %}
                 </ul>
             </div>
         </div>
     </nav>
+
 
     <!-- Alerts -->
     <div class="container">
@@ -86,16 +105,6 @@
     </footer>
 
     <script src="{% static 'js/script.js' %}"></script>
-
-    <!-- Google Ads -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7733736323090706"
-        crossorigin="anonymous"></script>
-
-    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-7733736323090706" data-ad-slot="1633872020"
-        data-ad-format="auto" data-full-width-responsive="true"></ins>
-    <script>
-        (adsbygoogle = window.adsbygoogle || []).push({});
-    </script>
 
 </body>
 

@@ -1,5 +1,5 @@
-from django import forms
+# from django import forms
 
-class UserDeleteForm(forms.Form):
-    """ Provides a check box """
-    delete = forms.BooleanField(required=True)
+# class UserDeleteForm(forms.Form):
+#     """ Provides a check box """
+#     delete = forms.BooleanField(required=True)
