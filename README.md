@@ -1,5 +1,8 @@
 # Inventor Blog - [Live Website](https://inventor-blog.herokuapp.com)
 
+
+https://github.com/DavidHearl/inventor-blog
+
 Multi Device Layout will go here
 https://techsini.com/multi-mockup/index.php
 
@@ -149,3 +152,8 @@ The user will find helpful posts and examples which they can complete to increas
 
 ## Acknowledgments
 ---
+
+- Based off Code Institutes Think-Before-You-Blog walkthough.
+- Various bits of code as well as troble shooting was taken from stack overflow.
+- Used bootstrap templates for cards and navigation
+- Icons were taken from font-awesome
