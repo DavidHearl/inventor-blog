@@ -90,7 +90,7 @@ def create_post(request):
         model = Post()
         results = Post.objects.filter(
             author=request.user, title=request.POST.get('title'))
-        post_form = PostForm()(request.POST, request.FILES)
+        post_form = PostForm(request.POST, request.FILES)
 
         if post_form.is_valid():
 

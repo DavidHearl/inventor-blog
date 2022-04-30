@@ -8,7 +8,7 @@ from .models import Post
 class PostAdmin(SummernoteModelAdmin):
     """Summernote fields for body text"""
     list_display = ('title', 'slug', 'author', 'status', 'created_on')
-    search_fields = ('title')
+    search_fields = ('title',)
     list_filter = ('status', 'created_on')
     prepopulated_fields = {'slug': ('title',)}
-    summernote_fields = ('body')
+    summernote_fields = ('body',)
