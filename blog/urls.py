@@ -1,21 +1,23 @@
+""" url paths for post pages """
 from django.urls import path
-from django.conf import settings
-from django.conf.urls.static import static
-from django.contrib.auth import views as auth_views
 from . import views
 
+
 urlpatterns = [
-    path('login/', auth_views.LoginView.as_view(
-        template_name='views/login.html'), name="login"),
-    path('logout/', auth_views.LogoutView.as_view(
-        template_name='views/logout.html'), name="logout"),
-    path("register/", views.register, name="register"),
-    path("", views.index, name="home"),
-    path('create_post/', views.createPost, name="create_post"),
-    path('post_detail/<str:pk>/', views.postDetail, name="post_detail"),
-    path('delete_post/<str:pk>/', views.deletePost, name="delete_Post"),
-    path(
-        'delete_comment/<str:pk>/',
-        views.deleteComment, name="delete_Comment"),
-    path('like/<str:pk>/', views.likePost, name="like_Post"),
+    path("create-post/", views.create_post, name="create_post"),
+    path("my-posts/", views.UserPosts.as_view(), name="my_published_posts"),
+    path("pending-approval/",
+         views.PendingPosts.as_view(), name="my_pending_posts"),
+    path("pending-approval/<int:pk>",
+         views.DraftPostDetail.as_view(), name="draft_post_detail"),
+    path("my-posts/<int:pk>update-post/",
+         views.UpdatePost.as_view(), name="update_post"),
+    path("my-posts/delete-post/<int:pk>",
+         views.DeletePost.as_view(), name="delete_post"),
+    path("my-posts/<int:pk>/update-pending-posts",
+         views.UpdatePendingPost.as_view(), name="update_draft"),
+    path("my-posts/delete-pending-post/<int:pk>",
+         views.DeletePendingPost.as_view(), name="delete_draft"),
+    path("<slug:slug>/", views.PostDetail.as_view(), name="post_detail"),
+    path("like/<slug:slug>/", views.LikePost.as_view(), name="like_post")
 ]

@@ -1,16 +1,18 @@
-from pathlib import Path
 import os
-import dj_database_url
+from pathlib import Path
 from django.contrib.messages import constants as messages
+import dj_database_url
 
 if os.path.isfile("env.py"):
     import env
 
+# development = os.environ.get('DEVELOPMENT', False)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
+FORM_RENDERER = 'django.forms.renderers.TemplatesSetting'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
@@ -19,7 +21,9 @@ TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+
+DEBUG = True  # change to development on project deployment,
+#  uncomment development line
 
 ALLOWED_HOSTS = ["inventor-blog.herokuapp.com", "localhost"]
 
@@ -33,26 +37,30 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.sites',
     'cloudinary_storage',
     'django.contrib.staticfiles',
     'cloudinary',
+    'django_summernote',
+    'django.forms',
     'crispy_forms',
     'blog',
+    'users',
 ]
 
 SITE_ID = 1
 
 LOGIN_REDIRECT_URL = 'home'
-# LOGOUT_REDIRECT_URL = '/'
+LOGIN_URL = 'login'
 
 MESSAGE_TAGS = {
-    messages.ERROR: 'danger',
+    messages.DEBUG: 'alert-info',
+    messages.INFO: 'alert-info',
+    messages.SUCCESS: 'alert-success',
+    messages.WARNING: 'alert-warning',
+    messages.ERROR: 'alert-danger',
 }
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
-
-LOGIN_REDIRECT_URL = 'home'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

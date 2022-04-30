@@ -188,7 +188,7 @@ class UpdatePendingPost(UpdateView):
         request = self.request
         messages.success(self.request, 'Post updated successfully!')
         post = form.save(commit=False)
-        post.instructions = request.POST.getlist('body')
+        post.body = request.POST.getlist('body')
         post.author = request.user
         post.save()
         return HttpResponseRedirect(self.get_success_url())
