@@ -47,12 +47,10 @@ The user will find helpful posts and examples which they can complete to increas
 ## Features
 ---
 
-Section to come when I can access the site again.
 
 ### Color Scheme
 ---
 
-Section to come when I can access the site again.
 
 ## Databases
 ---
@@ -151,17 +149,3 @@ Section to come when I can access the site again.
 
 ## Acknowledgments
 ---
-
-
-
-
-
-
-----------------------------
-
-## To Do List - Will be removed before final deployment
-
-- fix website
-- style website
-- write readme
-- deploy code
