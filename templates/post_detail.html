@@ -7,14 +7,10 @@
         <div class="col">
 
             <!-- Main Section -->
-
             <h1>{{ post.title }}</h1>
             <p>{{ post.author }} | {{ post.created_on }}</p>
 
-
-
             <!-- Like Section -->
-
             {% if user.is_authenticated %}
             <form action="{% url 'like_post' post.id %}" method="POST">
                 {% csrf_token %}

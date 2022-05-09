@@ -2,11 +2,7 @@
 {% block title %} CAD-Tips | Login{% endblock %}
 {% block content %}
 
-<header>
-    <h1>Login</h1>
-</header>
-
-<!-- Message Banner -->
+<!-- Message -->
 {% if messages %}
 <div class="container">
     <div class="row">
@@ -22,33 +18,51 @@
 </div>
 {% endif %}
 
+<!-- Login Card -->
+<div class="container">
+    <div class="row">
+        <div class="col d-flex justify-content-center">
+            <div class="card form">
+                <div class="card-body">
+                    <h2 class="login-title">Login</h2>
+                    <div>
+                        <form method="POST" action="">
+                            {% csrf_token %}
+                            <div class="form-input-fields">
+                                <label for="username">Username</label>
+                                <input id="username" name="username" type="text" class="form-input form-control">
+                            </div>
 
-<!-- Login Form  -->
+                            <div class="form-input-fields">
+                                <label for="password">Password</label>
+                                <input id="password" name="password" type="password" class="form-input form-control">
+                            </div>
 
-<div>
-    <form method="POST" action="" class="form accounts-forms login-form">
+                            <div class="form-input-fields">
+                                <button type="submit" class="login-button">LOGIN</button>
+                            </div>
 
-        {% csrf_token %}
+                            <hr>
 
-        <div class="form-input-fields">
-            <label for="username">Username</label>
-            <input id="username" name="username" type="text" class="form-input form-control">
+                            <div class="center">
+                                <i class="fab fa-facebook login-icons"></i>
+                                <i class="fab fa-google login-icons"></i>
+                                <i class="fab fa-linkedin login-icons"></i>
+                            </div>
+
+                            <div class="center">
+                                <p class="form-input-fields">Need an account?
+                                    <a href="{% url 'register' %}" class="link-item">Register</a>
+                                </p>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
-
-        <div class="form-input-fields">
-            <label for="password">Password</label>
-            <input id="password" name="password" type="password" class="form-input form-control">
-        </div>
-
-        <div class="form-input-fields">
-            <button type="submit" class="btn btn-dark all-btn">Sign in</button>
-        </div>
-
-        <p class="form-input-fields">Need an account?
-            Register <a href="{% url 'register' %}" class="link-item">here</a>!
-        </p>
-
-    </form>
+    </div>
 </div>
+
 
 {% endblock %}

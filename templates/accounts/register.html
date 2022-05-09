@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block title %} CAD-Tips | Register{% endblock %}
+{% block content %}
+
+<!-- Message -->
+{% if messages %}
+<div class="container app-messages">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            {% for message in messages %}
+            <div class="alert {{ message.tags }} alert-dismissible fade show" id="msg" role="alert">
+                {{ message | safe }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!-- Register Card -->
+<div class="container">
+    <div class="row">
+        <div class="col d-flex justify-content-center">
+            <div class="card form">
+                <div class="card-body">
+                    <h2 class="login-title">Register</h2>
+                    <div>
+                        <form method="POST" action="">
+                            {% csrf_token %}
+                            <div>
+                                <label for="email">Email</label><br>
+                                <input type="email" name="email" id="email" class="registration-input" required>
+                            </div>
+                            <div class="form-input-fields">
+                                <label for="username">Username</label><br>
+                                <input type="text" name="username" id="username" class="registration-input" required>
+                            </div>
+                            <div class="form-input-fields">
+                                <label for="password1">Password</label><br>
+                                <input type="password" name="password1" id="password1" class="registration-input">
+                            </div>
+                            <div class="form-input-fields">
+                                <label for="password2">Repeat Password</label><br>
+                                <input type="password" name="password2" id="password2" class="registration-input"
+                                    required>
+                            </div>
+                            <div class="form-input-fields">
+                                <button type="submit" class="login-button">REGISTER</button>
+                            </div>
+                            {{ form.errors }}
+
+                            <hr>
+
+                            <div class="center">
+                                <i class="fab fa-facebook login-icons"></i>
+                                <i class="fab fa-google login-icons"></i>
+                                <i class="fab fa-linkedin login-icons"></i>
+                            </div>
+
+                            <div class="center">
+                                <p class="form-input-fields">Already have an account?
+                                    Please <a href="{% url 'login' %}" class="link-item">Login</a>!
+                                </p>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
