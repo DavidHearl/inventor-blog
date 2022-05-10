@@ -44,13 +44,13 @@
                     {% if user.is_authenticated %}
 
                     <li class="nav-item dropdown nav-style">
-                        <a class="nav-link dropdown-toggle welcome" href="#" id="navbarDropdown" role="button"
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
                             <span>Hi {{ user.username }}!</span>
                         </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="{% url 'create_post' %}"><i
-                                        class="fas fa-plus"></i>Add Post</a></li>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="{% url 'create_post' %}"><i class="fas fa-plus"></i>Add
+                                    Post</a></li>
                             <li><a class="dropdown-item" href="{% url 'my_published_posts' %}"><i
                                         class="fas fa-memo"></i>My Posts</a></li>
                             <li><a class="dropdown-item" href="{% url 'my_pending_posts' %}"><i
@@ -60,10 +60,14 @@
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="{% url 'logout' %}"><i
-                                        class="fas fa-sign-out-alt nav-icon"></i>Logout</a></li>
+                            <li>
+                                <a class="dropdown-item" href="{% url 'logout' %}">
+                                    <i class="fas fa-sign-out-alt nav-icon"></i>Logout
+                                </a>
+                            </li>
                         </ul>
                     </li>
+
                     {% else %}
                     <li class="nav-item dropdown">
                         <a href="{% url 'login' %}" class="nav-link" id="navbarDropdown" role="button"
@@ -90,7 +94,7 @@
 
     <main>
         {% block content %}
-        
+
         {% endblock content %}
     </main>
 

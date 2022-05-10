@@ -5,7 +5,6 @@ body{
 }
 
 /* Global */
-
 .center{
     text-align: center;
 }
@@ -26,7 +25,7 @@ body{
 
 .navbar{
     background-color: rgb(10,15,20);
-    margin-bottom: 25px;
+    /* margin-bottom: 25px; */
 }
 
 .nav-link{
